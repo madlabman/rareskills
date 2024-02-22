@@ -1,0 +1,14 @@
+[compiler.solc]
+exclude_paths = ["node_modules"]
+include_paths = []
+remappings = [
+    "@openzeppelin/contracts/=node_modules/openzeppelin-solidity/contracts/",
+    "ds-test/=node_modules/ds-test/src/",
+    "forge-std/=node_modules/forge-std/src/",
+]
+
+[compiler.solc.optimizer]
+enabled = false
+
+[detectors]
+only = []
