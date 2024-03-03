@@ -30,13 +30,13 @@ contract BondingCurveToken is ERC20 {
     }
 
     function sell(uint256 tokens) external {
-        uint256 eth = cost(totalSupply() - tokens, tokens);
+        uint256 eth = cost({ supply: totalSupply() - tokens, amount: tokens, roundUp: false });
         _burn(msg.sender, tokens);
         _sendEth(msg.sender, eth);
     }
 
     function buy(uint256 tokens) external payable {
-        uint256 eth = cost(totalSupply(), tokens);
+        uint256 eth = cost({ supply: totalSupply(), amount: tokens, roundUp: true });
 
         if (msg.value != eth) {
             revert InvalidEtherAmount();
@@ -47,10 +47,10 @@ contract BondingCurveToken is ERC20 {
 
     /// @notice Calculates a total cost paid for the next `amount` tokens starting with `supply`.
     /// @dev Compute as an area of a trapesoid rounded up to the nearest integer.
-    function cost(uint256 supply, uint256 amount) public view returns (uint256) {
+    function cost(uint256 supply, uint256 amount, bool roundUp) public view returns (uint256) {
         // uint256 nominator = (curve(supply) + curve(supply + amount)) * amount;
         uint256 nominator = (m * (2 * supply + amount) + 2 * c) * amount;
-        if (nominator % 2 != 0) {
+        if (roundUp && nominator % 2 != 0) {
             nominator++;
         }
 

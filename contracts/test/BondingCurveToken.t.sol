@@ -43,14 +43,20 @@ contract BondingCurveTokenTest is Utils, Test {
         token.sell(100);
 
         vm.prank(quinn);
-        token.sell(10);
+        token.sell(7);
+
+        vm.prank(quinn);
+        token.sell(2);
+
+        vm.prank(quinn);
+        token.sell(1);
 
         assertEq(carol.balance, 6000);
-        assertEq(quinn.balance, 50);
+        assertEq(quinn.balance, 49);
         assertEq(token.totalSupply(), 0);
     }
 
-    function test_buyTokens() public {
+    function test_buyTokens_m3c100() public {
         token = new BondingCurveToken({ slope: 3, interceptor: 100 });
 
         vm.prank(alice);
@@ -69,10 +75,16 @@ contract BondingCurveTokenTest is Utils, Test {
         token.sell(100);
 
         vm.prank(quinn);
-        token.sell(10);
+        token.sell(7);
+
+        vm.prank(quinn);
+        token.sell(2);
+
+        vm.prank(quinn);
+        token.sell(1);
 
         assertEq(carol.balance, 28000);
-        assertEq(quinn.balance, 1150);
+        assertEq(quinn.balance, 1149);
         assertEq(token.totalSupply(), 0);
     }
 }
