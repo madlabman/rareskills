@@ -4,7 +4,7 @@ pragma solidity 0.8.24;
 import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract CensoredToken is ERC20 {
-    mapping(address => bool) internal _isBanned;
+    mapping(address => uint256) internal _isBanned;
     address internal _admin;
 
     event UserForbidden(address);
@@ -28,12 +28,12 @@ contract CensoredToken is ERC20 {
             revert ZeroAddress();
         }
 
-        _isBanned[user] = true;
+        _isBanned[user] = 1;
         emit UserForbidden(user);
     }
 
     function clearUser(address user) external onlyAdmin {
-        _isBanned[user] = false;
+        _isBanned[user] = 0;
         emit UserCleared(user);
     }
 
@@ -43,11 +43,11 @@ contract CensoredToken is ERC20 {
     }
 
     function _update(address from, address to, uint256 value) internal override {
-        if (_isBanned[from]) {
+        if (_isBanned[from] != 0) {
             revert ERC20InvalidSender(from);
         }
 
-        if (_isBanned[to]) {
+        if (_isBanned[to] != 0) {
             revert ERC20InvalidReceiver(to);
         }
 
