@@ -8,15 +8,15 @@ contract UntrustedEscrow {
     using SafeERC20 for IERC20;
 
     struct Position {
+        bool claimed;
+        uint40 claimableAt; // The width is reduced to 40 bits for practical reasons.
         address creator;
         address receiver;
         address token;
         uint256 amount;
-        uint256 claimableAt;
-        bool claimed;
     }
 
-    uint256 public constant LOCK_INTERVAL = 3 days;
+    uint40 public constant LOCK_INTERVAL = 3 days;
 
     Position[] public positions;
 
@@ -49,7 +49,7 @@ contract UntrustedEscrow {
                 receiver: receiver,
                 token: token,
                 amount: amount,
-                claimableAt: block.timestamp + LOCK_INTERVAL,
+                claimableAt: uint40(block.timestamp) + LOCK_INTERVAL,
                 claimed: false
             })
         );

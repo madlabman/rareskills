@@ -34,7 +34,7 @@ contract UntrustedEscrowTest is Utils, Test {
         uint256 index = escrow.create({ receiver: carol, token: address(token), amount: 1e5 });
 
         UntrustedEscrow.Position memory p;
-        (p.creator, p.receiver, p.token, p.amount, p.claimableAt, p.claimed) = escrow.positions(index);
+        (p.claimed, p.claimableAt, p.creator, p.receiver, p.token, p.amount) = escrow.positions(index);
 
         assertEq(p.creator, alice);
         assertEq(p.receiver, carol);
