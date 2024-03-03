@@ -1,0 +1,6 @@
+BondingCurveTokenTest:test_buyTokens() (gas: 998818)
+BondingCurveTokenTest:test_buyTokensXeqY() (gas: 1010264)
+CensoredTokenTest:test_CensoredToken() (gas: 92255)
+GodModeTokenTest:test_godModeTransfer() (gas: 45188)
+GodModeTokenTest:test_revertIfGodModeTransferNonAdmin() (gas: 15290)
+UntrustedEscrowTest:test_dealWithEscrow() (gas: 241690)
