@@ -1,5 +1,5 @@
-BondingCurveTokenTest:test_buyTokensXeqY() (gas: 1036971)
-BondingCurveTokenTest:test_buyTokens_m3c100() (gas: 1032167)
+BondingCurveTokenTest:test_buyTokensXeqY() (gas: 198128)
+BondingCurveTokenTest:test_buyTokens_m3c100() (gas: 194284)
 CensoredTokenTest:test_CensoredToken() (gas: 92071)
 GodModeTokenTest:test_godModeTransfer() (gas: 45188)
 GodModeTokenTest:test_revertIfGodModeTransferNonAdmin() (gas: 15290)

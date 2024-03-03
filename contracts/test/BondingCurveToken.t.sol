@@ -21,7 +21,7 @@ contract BondingCurveTokenTest is Utils, Test {
     }
 
     function test_buyTokensXeqY() public {
-        token = new BondingCurveToken({ slope: 1, interceptor: 0 });
+        token = deploy({ slope: 1, interceptor: 0 });
 
         // But we can sell 1 token multiple times and it will result in OutOfFund error.
         vm.prank(alice);
@@ -57,7 +57,7 @@ contract BondingCurveTokenTest is Utils, Test {
     }
 
     function test_buyTokens_m3c100() public {
-        token = new BondingCurveToken({ slope: 3, interceptor: 100 });
+        token = deploy({ slope: 3, interceptor: 100 });
 
         vm.prank(alice);
         token.buy{ value: 25000 }(100);
@@ -86,5 +86,9 @@ contract BondingCurveTokenTest is Utils, Test {
         assertEq(carol.balance, 28000);
         assertEq(quinn.balance, 1149);
         assertEq(token.totalSupply(), 0);
+    }
+
+    function deploy(uint256 slope, uint256 interceptor) internal noGasMetering returns (BondingCurveToken) {
+        return new BondingCurveToken(slope, interceptor);
     }
 }
