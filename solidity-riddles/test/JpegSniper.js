@@ -32,7 +32,8 @@ before(async () => {
 });
 
 it("solves the challenge", async function () {
-    // implement solution here
+    const AttackerFactory = await ethers.getContractFactory("JpegSniperAttacker");
+    await AttackerFactory.connect(attacker).deploy(flatLaunchpeg.address, 69);
 });
 
 /// expected final state
