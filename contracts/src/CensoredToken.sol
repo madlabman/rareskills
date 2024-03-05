@@ -7,9 +7,9 @@ contract CensoredToken is ERC20 {
     mapping(address => uint256) internal _isBanned;
     address internal _admin;
 
-    event UserForbidden(address);
-    event UserCleared(address);
-    event AdminSet(address);
+    event UserForbidden(address indexed);
+    event UserCleared(address indexed);
+    event AdminSet(address indexed);
 
     error Unauthorized();
     error ZeroAddress();
