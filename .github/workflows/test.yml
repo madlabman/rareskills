@@ -1,7 +1,9 @@
 ---
 name: Contracts tests
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  push:
 
 env:
   FOUNDRY_PROFILE: ci
@@ -39,5 +41,4 @@ jobs:
 
       - name: Run Forge tests
         run: |
-          forge test -vvv
-        id: test
+          forge test
