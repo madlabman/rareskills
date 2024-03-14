@@ -59,15 +59,14 @@ contract NFT is Ownable2Step, ERC721Royalty {
 
         // NOTE: Using sha256 to avoid the second pre-image attack.
         bytes32 leaf = sha256(abi.encode(index, msg.sender));
-
-        if (!MerkleProof.verifyCalldata(proof, merkleRoot, leaf)) {
-            revert InvalidProof();
-        }
+        _verifyProof(proof, leaf);
 
         _minted.set(index);
         _mint(msg.sender);
     }
 
+    // Get the roalty value back to the address provided by the owner.
+    // TODO: Is it ether, btw?
     function claim(address to) external onlyOwner {
         _sendEth(to, address(this).balance);
     }
@@ -80,6 +79,13 @@ contract NFT is Ownable2Step, ERC721Royalty {
             }
         }
         super._mint(to, totalSupply);
+    }
+
+    // For testing purposes mostly.
+    function _verifyProof(bytes32[] calldata proof, bytes32 leaf) internal view virtual {
+        if (!MerkleProof.verifyCalldata(proof, merkleRoot, leaf)) {
+            revert InvalidProof();
+        }
     }
 
     function _sendEth(address to, uint256 amount) internal {
