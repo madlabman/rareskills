@@ -36,7 +36,7 @@ contract Enumerator {
             return true;
         }
 
-        if (n % 2 == 0 || n % 3 == 0) {
+        if (n & 1 == 0 || n % 3 == 0) {
             return false;
         }
 
