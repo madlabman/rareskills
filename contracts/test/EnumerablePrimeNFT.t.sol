@@ -21,7 +21,7 @@ contract EnumeratorTest is Test {
 
     function test_getCountOfPrimeTokens() public {
         for (uint256 i = 10; i < 14; i++) {
-            nft.mint(i);
+            nft.mint();
         }
 
         uint256 count = enumerator.getCountOfPrimeTokens(address(this));
