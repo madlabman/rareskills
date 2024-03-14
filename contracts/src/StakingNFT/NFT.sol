@@ -13,12 +13,13 @@ contract NFT is Ownable2Step, ERC721Royalty {
     using BitMaps for BitMaps.BitMap;
 
     uint256 public constant MAX_SUPPLY = 1000;
+    uint256 public constant BP_MAX = 10_000;
     uint256 public constant PRICE = 1 ether;
 
     uint256 public totalSupply;
 
+    uint256 public discountPrice;
     bytes32 public merkleRoot;
-    uint256 public discountBP;
 
     BitMaps.BitMap private _minted;
 
@@ -27,6 +28,7 @@ contract NFT is Ownable2Step, ERC721Royalty {
     error AlreadyMinted();
     error InvalidAmount();
     error InvalidProof();
+    error InvalidPercentage();
 
     constructor(address initialOwner) Ownable(initialOwner) ERC721("NFT", "NFT") {
         _setDefaultRoyalty(msg.sender, 250); // 2.5%
@@ -37,7 +39,13 @@ contract NFT is Ownable2Step, ERC721Royalty {
     }
 
     function setDiscount(uint256 bp) external onlyOwner {
-        discountBP = bp;
+        if (bp > BP_MAX) {
+            revert InvalidPercentage();
+        }
+
+        unchecked {
+            discountPrice = (BP_MAX - bp) * PRICE / BP_MAX;
+        }
     }
 
     function mint() external payable {
@@ -49,7 +57,7 @@ contract NFT is Ownable2Step, ERC721Royalty {
     }
 
     function mintWithDiscount(bytes32[] calldata proof, uint24 index) external payable {
-        if (msg.value != PRICE - PRICE * discountBP / 10_000) {
+        if (msg.value != discountPrice) {
             revert InvalidAmount();
         }
 
