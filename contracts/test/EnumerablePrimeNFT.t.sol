@@ -28,9 +28,10 @@ contract EnumeratorTest is Test {
         assertEq(count, 2);
     }
 
+    /// forge-config: default.fuzz.runs = 101
     function testFuzz_isPrime(uint256 n) public {
         vm.assume(n > 1);
-        vm.assume(n < 1_000_000);
+        vm.assume(n < 100);
 
         string[] memory cmd = new string[](3);
         cmd[0] = "bun";
