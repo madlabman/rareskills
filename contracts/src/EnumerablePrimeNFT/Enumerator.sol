@@ -15,7 +15,7 @@ contract Enumerator {
     function getCountOfPrimeTokens(address holder) external view returns (uint256 primes) {
         uint256 balance = NFT.balanceOf(holder);
 
-        while (balance > 0) {
+        while (balance != 0) {
             unchecked {
                 uint256 tokenId = NFT.tokenOfOwnerByIndex(holder, --balance);
                 if (isPrime(tokenId)) ++primes;
@@ -36,17 +36,28 @@ contract Enumerator {
             return true;
         }
 
-        if (n & 1 == 0 || n % 3 == 0) {
+        if (n & 1 == 0) {
+            return false;
+        }
+
+        if (n % 3 == 0) {
             return false;
         }
 
         uint256 i = 5;
 
-        while (i * i <= n) {
-            if (n % i == 0 || n % (i + 2) == 0) {
-                return false;
+        unchecked {
+            while (i * i <= n) {
+                if (n % i == 0) {
+                    return false;
+                }
+
+                if (n % (i + 2) == 0) {
+                    return false;
+                }
+
+                i += 6;
             }
-            i += 6;
         }
 
         return true;
