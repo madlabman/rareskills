@@ -10,18 +10,19 @@ contract Staking is IERC721Receiver {
     uint256 public constant TOKEN_REWARD = 10;
 
     mapping(address => uint256[]) public stakedTokens;
-    mapping(address => uint256) public claimedAtBlock;
+    mapping(address => uint256) public claimedAt;
 
-    RewardToken internal _reward;
-    NFT internal _nft;
+    RewardToken public reward;
+    NFT public nft;
 
     mapping(uint256 => uint256) internal _tokenToStakedTokensIndex;
 
+    error RejectTransfer();
     error InvalidTokenId();
 
     constructor() {
-        _reward = new RewardToken(address(this));
-        _nft = new NFT(msg.sender);
+        reward = new RewardToken(address(this));
+        nft = new NFT(msg.sender);
     }
 
     function onERC721Received(address, address from, uint256 tokenId, bytes calldata)
@@ -29,6 +30,10 @@ contract Staking is IERC721Receiver {
         override
         returns (bytes4)
     {
+        if (msg.sender != address(nft)) {
+            revert RejectTransfer();
+        }
+
         _claim(from);
         _tokenToStakedTokensIndex[tokenId] = stakedTokens[from].length;
         stakedTokens[from].push(tokenId);
@@ -55,22 +60,31 @@ contract Staking is IERC721Receiver {
 
         stakedTokens[msg.sender].pop();
 
-        _nft.transferFrom(address(this), msg.sender, tokenId);
+        nft.transferFrom(address(this), msg.sender, tokenId);
     }
 
     function claim() external {
         _claim(msg.sender);
     }
 
+    function unclaimed() external view returns (uint256) {
+        return _unclaimed(msg.sender);
+    }
+
     function _claim(address user) internal {
-        uint256 unclaimed = _unclaimed(user);
-        claimedAtBlock[user] = block.number;
-        _reward.mint(user, unclaimed);
+        uint256 amount = _unclaimed(user);
+        claimedAt[user] = block.timestamp;
+        reward.mint(user, amount);
     }
 
     function _unclaimed(address user) internal view returns (uint256) {
         uint256 tokens = stakedTokens[user].length;
-        uint256 startBlock = claimedAtBlock[user];
-        return tokens * TOKEN_REWARD * (block.number - startBlock) / REWARD_INTERVAL;
+        // Save gas for newcomers.
+        if (tokens == 0) {
+            return 0;
+        }
+
+        uint256 lastClaim = claimedAt[user];
+        return tokens * TOKEN_REWARD * (block.timestamp - lastClaim) / REWARD_INTERVAL;
     }
 }
