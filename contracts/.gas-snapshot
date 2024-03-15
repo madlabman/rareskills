@@ -1,7 +1,7 @@
 BondingCurveTokenTest:test_buyTokensXeqY() (gas: 198128)
 BondingCurveTokenTest:test_buyTokens_m3c100() (gas: 194284)
 CensoredTokenTest:test_CensoredToken() (gas: 92385)
-EnumeratorTest:testFuzz_isPrime(uint256) (runs: 257, μ: 12135, ~: 12101)
+EnumeratorTest:testFuzz_isPrime(uint256) (runs: 258, μ: 9233, ~: 9085)
 EnumeratorTest:testGas_isPrime() (gas: 102588)
 EnumeratorTest:test_getCountOfPrimeTokens() (gas: 481985)
 GodModeTokenTest:test_godModeTransfer() (gas: 45188)

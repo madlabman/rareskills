@@ -32,15 +32,7 @@ contract EnumeratorTest is Test {
     function testFuzz_isPrime(uint256 n) public {
         vm.assume(n > 1);
         vm.assume(n < 100);
-
-        string[] memory cmd = new string[](3);
-        cmd[0] = "bun";
-        cmd[1] = "test/ffi/isPrime.js";
-        cmd[2] = n.toString();
-        bytes memory res = vm.ffi(cmd);
-
-        bool expected = abi.decode(res, (bool));
-        assertEq(enumerator.isPrime(n), expected);
+        assertEq(enumerator.isPrime(n), _isPrime(n));
     }
 
     // | Function Name | min | avg | median | max  | # calls |
@@ -49,5 +41,14 @@ contract EnumeratorTest is Test {
         for (uint256 i = 1; i < 101; ++i) {
             enumerator.isPrime(i);
         }
+    }
+
+    function _isPrime(uint256 n) internal pure returns (bool) {
+        for (uint256 k = 2; k < n; k++) {
+            if (n % k == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 }
