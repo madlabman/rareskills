@@ -53,9 +53,11 @@ contract Staking is IERC721Receiver {
 
         uint256 tokensCount = stakedTokens[msg.sender].length;
         if (tokensCount > 1) {
-            uint256 tokenToMove = stakedTokens[msg.sender][tokensCount - 1];
-            _tokenToStakedTokensIndex[tokenToMove] = index;
-            stakedTokens[msg.sender][index] = tokenToMove;
+            unchecked {
+                uint256 tokenToMove = stakedTokens[msg.sender][tokensCount - 1];
+                _tokenToStakedTokensIndex[tokenToMove] = index;
+                stakedTokens[msg.sender][index] = tokenToMove;
+            }
         }
 
         stakedTokens[msg.sender].pop();

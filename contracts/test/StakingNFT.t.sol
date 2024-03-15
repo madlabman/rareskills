@@ -111,7 +111,16 @@ contract StakingTest is Utils, Test {
         startHoax(alice);
         staking.nft().mint{ value: staking.nft().PRICE() }();
         staking.nft().mint{ value: staking.nft().PRICE() }();
+        staking.nft().mint{ value: staking.nft().PRICE() }();
         staking.nft().safeTransferFrom(alice, address(staking), 1);
         staking.nft().safeTransferFrom(alice, address(staking), 2);
+        staking.nft().safeTransferFrom(alice, address(staking), 3);
+        assertEq(staking.nft().ownerOf(1), address(staking));
+        assertEq(staking.nft().ownerOf(2), address(staking));
+        assertEq(staking.nft().ownerOf(3), address(staking));
+        staking.withdraw(2);
+        assertEq(staking.nft().ownerOf(2), alice);
+        assertEq(staking.nft().ownerOf(1), address(staking));
+        assertEq(staking.nft().ownerOf(3), address(staking));
     }
 }

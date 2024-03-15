@@ -65,9 +65,11 @@ contract NFT is Ownable2Step, ERC721Royalty {
             revert AlreadyMinted();
         }
 
-        // NOTE: Using sha256 to avoid the second pre-image attack.
-        bytes32 leaf = sha256(abi.encode(index, msg.sender));
-        _verifyProof(proof, leaf);
+        {
+            // NOTE: Using sha256 to avoid the second pre-image attack.
+            bytes32 leaf = sha256(abi.encode(index, msg.sender));
+            _verifyProof(proof, leaf);
+        }
 
         _minted.set(index);
         _mint(msg.sender);
