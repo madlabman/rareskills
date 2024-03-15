@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.24;
 
+import { Staking } from "../src/StakingNFT/Staking.sol";
 import { NFT } from "../src/StakingNFT/NFT.sol";
 import { Test } from "forge-std/Test.sol";
 import { Utils } from "./utils/Utils.sol";
@@ -69,5 +70,48 @@ contract NFTTest is Utils, Test {
     function _setDisount(uint256 bp) internal noGasMetering {
         vm.prank(owner);
         nft.setDiscount(bp);
+    }
+}
+
+contract StakingTest is Utils, Test {
+    Staking staking;
+
+    address alice;
+    address carol;
+
+    function setUp() public {
+        alice = nextAddress("ALICE");
+        carol = nextAddress("CAROL");
+
+        staking = new Staking();
+    }
+
+    function test_stake() public {
+        vm.deal(alice, staking.nft().PRICE());
+        vm.startPrank(alice);
+        staking.nft().mint{ value: alice.balance }();
+        staking.nft().safeTransferFrom(alice, address(staking), 1);
+        assertEq(staking.nft().ownerOf(1), address(staking));
+        assertEq(staking.stakedTokens(alice, 0), 1);
+    }
+
+    function test_claim() public {
+        startHoax(alice);
+        staking.nft().mint{ value: staking.nft().PRICE() }();
+        staking.nft().safeTransferFrom(alice, address(staking), 1);
+        assertEq(staking.reward().balanceOf(alice), 0);
+
+        skip(2 days);
+
+        staking.claim();
+        assertEq(staking.reward().balanceOf(alice), 20);
+    }
+
+    function test_withdraw() public {
+        startHoax(alice);
+        staking.nft().mint{ value: staking.nft().PRICE() }();
+        staking.nft().mint{ value: staking.nft().PRICE() }();
+        staking.nft().safeTransferFrom(alice, address(staking), 1);
+        staking.nft().safeTransferFrom(alice, address(staking), 2);
     }
 }
