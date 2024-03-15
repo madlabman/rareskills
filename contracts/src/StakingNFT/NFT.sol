@@ -30,7 +30,7 @@ contract NFT is Ownable2Step, ERC721Royalty {
     error InvalidProof();
     error InvalidPercentage();
 
-    constructor(address initialOwner) Ownable(initialOwner) ERC721("NFT", "NFT") {
+    constructor(address initialOwner) payable Ownable(initialOwner) ERC721("NFT", "NFT") {
         _setDefaultRoyalty(msg.sender, 250); // 2.5%
     }
 

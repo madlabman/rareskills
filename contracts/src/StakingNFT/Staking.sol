@@ -20,7 +20,7 @@ contract Staking is IERC721Receiver {
     error RejectTransfer();
     error InvalidTokenId();
 
-    constructor() {
+    constructor() payable {
         reward = new RewardToken(address(this));
         nft = new NFT(msg.sender);
     }

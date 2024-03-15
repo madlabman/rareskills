@@ -9,7 +9,7 @@ contract NFT is ERC721Enumerable {
     error MaxSupplyReached();
     error InvalidTokenId();
 
-    constructor() ERC721("NFT", "NFT") { }
+    constructor() payable ERC721("NFT", "NFT") { }
 
     function mint() public {
         uint256 supply = totalSupply();

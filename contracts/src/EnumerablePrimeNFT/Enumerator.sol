@@ -8,7 +8,7 @@ contract Enumerator {
 
     error Undefined();
 
-    constructor(address nft) {
+    constructor(address nft) payable {
         NFT = IERC721Enumerable(nft);
     }
 
