@@ -42,6 +42,11 @@ contract Staking is IERC721Receiver {
     }
 
     function withdraw(uint256 tokenId) external {
+        uint256 tokensCount = stakedTokens[msg.sender].length;
+        if (tokensCount == 0) {
+            revert InvalidTokenId();
+        }
+
         uint256 index = _tokenToStakedTokensIndex[tokenId];
         if (stakedTokens[msg.sender][index] != tokenId) {
             revert InvalidTokenId();
@@ -50,8 +55,6 @@ contract Staking is IERC721Receiver {
         _claim(msg.sender);
 
         delete _tokenToStakedTokensIndex[tokenId];
-
-        uint256 tokensCount = stakedTokens[msg.sender].length;
         if (tokensCount > 1) {
             unchecked {
                 uint256 tokenToMove = stakedTokens[msg.sender][tokensCount - 1];
@@ -59,7 +62,6 @@ contract Staking is IERC721Receiver {
                 stakedTokens[msg.sender][index] = tokenToMove;
             }
         }
-
         stakedTokens[msg.sender].pop();
 
         nft.transferFrom(address(this), msg.sender, tokenId);
