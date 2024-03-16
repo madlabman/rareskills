@@ -12,12 +12,14 @@ contract NFT is ERC721Enumerable {
     constructor() payable ERC721("NFT", "NFT") { }
 
     function mint() public {
-        uint256 supply = totalSupply();
+        unchecked {
+            uint256 supply = totalSupply();
 
-        if (supply >= MAX_SUPPLY) {
-            revert MaxSupplyReached();
+            if (supply == MAX_SUPPLY) {
+                revert MaxSupplyReached();
+            }
+
+            _mint(_msgSender(), ++supply);
         }
-
-        _mint(_msgSender(), ++supply);
     }
 }
