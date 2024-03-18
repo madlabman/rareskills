@@ -18,30 +18,30 @@ contract Enumerator {
         while (balance != 0) {
             unchecked {
                 uint256 tokenId = NFT.tokenOfOwnerByIndex(holder, --balance);
-                if (isPrime(tokenId)) ++primes;
+                primes += isPrime(tokenId); // isPrime returns 1 if prime, 0 if not;
             }
         }
     }
 
-    function isPrime(uint256 n) public pure returns (bool) {
+    function isPrime(uint256 n) public pure returns (uint256) {
         if (n == 0) {
             revert Undefined();
         }
 
         if (n == 1) {
-            return false;
+            return 0;
         }
 
         if (n < 4) {
-            return true;
+            return 1;
         }
 
         if (n & 1 == 0) {
-            return false;
+            return 0;
         }
 
         if (n % 3 == 0) {
-            return false;
+            return 0;
         }
 
         uint256 i = 5;
@@ -49,17 +49,17 @@ contract Enumerator {
         unchecked {
             while (i * i <= n) {
                 if (n % i == 0) {
-                    return false;
+                    return 0;
                 }
 
                 if (n % (i + 2) == 0) {
-                    return false;
+                    return 0;
                 }
 
                 i += 6;
             }
         }
 
-        return true;
+        return 1;
     }
 }

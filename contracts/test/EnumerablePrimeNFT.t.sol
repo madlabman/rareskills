@@ -43,12 +43,12 @@ contract EnumeratorTest is Test {
         }
     }
 
-    function _isPrime(uint256 n) internal pure returns (bool) {
+    function _isPrime(uint256 n) internal pure returns (uint256) {
         for (uint256 k = 2; k < n; k++) {
             if (n % k == 0) {
-                return false;
+                return 0;
             }
         }
-        return true;
+        return 1;
     }
 }
