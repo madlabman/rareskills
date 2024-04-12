@@ -2,7 +2,7 @@
   "dependencies": {
     "ds-test": "github:dapphub/ds-test",
     "forge-std": "github:foundry-rs/forge-std#v1.7.6",
-    "openzeppelin-solidity": "github:OpenZeppelin/openzeppelin-contracts#v5.0.1"
+    "openzeppelin-solidity": "github:OpenZeppelin/openzeppelin-contracts#v5.0.1",
+    "solady": "^0.0.178"
   }
 }
-

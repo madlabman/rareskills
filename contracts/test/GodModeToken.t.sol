@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.24;
+pragma solidity 0.8.25;
 
 import { GodModeToken } from "../src/GodModeToken.sol";
 import { Test, console } from "forge-std/Test.sol";

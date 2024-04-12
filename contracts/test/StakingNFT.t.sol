@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.24;
+pragma solidity 0.8.25;
 
 import { Staking } from "../src/StakingNFT/Staking.sol";
 import { NFT } from "../src/StakingNFT/NFT.sol";

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.24;
+pragma solidity 0.8.25;
 
 import { Enumerator } from "../src/EnumerablePrimeNFT/Enumerator.sol";
 import { NFT } from "../src/EnumerablePrimeNFT/NFT.sol";
