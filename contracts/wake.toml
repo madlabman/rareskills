@@ -1,8 +1,10 @@
 [compiler.solc]
+evm_version = "cancun"
 exclude_paths = ["node_modules"]
 include_paths = []
 remappings = [
     "@openzeppelin/contracts/=node_modules/openzeppelin-solidity/contracts/",
+    "solady/=node_modules/solady/src/",
     "ds-test/=node_modules/ds-test/src/",
     "forge-std/=node_modules/forge-std/src/",
 ]
