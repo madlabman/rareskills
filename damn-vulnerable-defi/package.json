@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "ds-test": "github:dapphub/ds-test",
+    "forge-std": "github:foundry-rs/forge-std#v1.7.6",
+    "solady": "github:Vectorized/solady#v0.0.67"
+  }
+}

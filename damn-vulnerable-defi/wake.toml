@@ -1,0 +1,25 @@
+[compiler.solc]
+evm_version = "cancun"
+exclude_paths = ["node_modules","lib", "script"]
+include_paths = []
+remappings = [
+    "forge-std/=node_modules/forge-std/src/",
+    "ds-test/=node_modules/ds-test/src/",
+    "solady/=node_modules/solady/",
+]
+
+[compiler.solc.optimizer]
+enabled = false
+
+[detectors]
+only = []
+
+[lsp]
+compilation_delay = 1
+
+[lsp.code_lens]
+enable = false
+
+[lsp.detectors]
+enable = false
+
