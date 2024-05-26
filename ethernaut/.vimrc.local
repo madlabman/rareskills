@@ -1,0 +1,4 @@
+lua << EOF
+require("conform").formatters_by_ft.solidity = { "forgefmt" }
+require("lint").linters_by_ft.solidity = { }
+EOF

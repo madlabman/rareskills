@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "ds-test": "github:dapphub/ds-test",
+    "forge-std": "github:foundry-rs/forge-std#v1.7.6",
+    "openzeppelin-upgradeable": "github:OpenZeppelin/openzeppelin-contracts-upgradeable#2d081f2",
+    "openzeppelin-solidity-08": "github:openzeppelin/openzeppelin-contracts#ecd2ca2"
+  }
+}

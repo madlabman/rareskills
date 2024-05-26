@@ -1,0 +1,26 @@
+[compiler.solc]
+evm_version = "cancun"
+exclude_paths = ["node_modules","lib", "script"]
+include_paths = []
+remappings = [
+    "forge-std/=node_modules/forge-std/src/",
+    "ds-test/=node_modules/ds-test/src/",
+    "openzeppelin-contracts-08/=node_modules/openzeppelin-solidity-08/contracts/",
+    "openzeppelin-upgradeable/=node_modules/openzeppelin-upgradeable/contracts/"
+]
+
+[compiler.solc.optimizer]
+enabled = false
+
+[detectors]
+only = []
+
+[lsp]
+compilation_delay = 1
+
+[lsp.code_lens]
+enable = false
+
+[lsp.detectors]
+enable = false
+
